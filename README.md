@@ -82,6 +82,9 @@ this will only install the preconfigured user and its cloned data ext4 is curren
 and this will setup with grub only this will not setup a seperate swap or home
 
 
+download the appimage from releases
+<div align="center">
+or search apexinstaller in the aur or use this link https://aur.archlinux.org/packages/apexinstaller
 
 
 
