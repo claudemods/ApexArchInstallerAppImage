@@ -35,13 +35,12 @@
 
 </div>
 
+<div align="center">
 
 ## [ Support Me ](https://www.paypal.com/paypalme/claudemods?country.x=GB&locale)
 
 
 </div>
-<div align="center">
-
 [![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&label=claudemods&color=3399FF&Linux&logo=ko-fi&logoColor=white)](https://ko-fi.com/claudemods)
 [![GitHub Sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&label=claudemods&color=A836FF&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/claudemods)</div>
 
