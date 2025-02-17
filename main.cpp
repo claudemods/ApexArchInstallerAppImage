@@ -61,7 +61,7 @@ public:
         headerLayout->addLayout(imageLayout);
 
         // Add title text under the images
-        QLabel *titleLabel = new QLabel("Apex Arch Installer AppImage v1.0", this);
+        QLabel *titleLabel = new QLabel("Apex Installer v1.0", this);
         QFont titleFont = titleLabel->font();
         titleFont.setPointSize(16);
         titleLabel->setFont(titleFont);
