@@ -18,6 +18,10 @@
 
 <div align="center">
 
+
+
+
+
 [![Version](https://img.shields.io/github/v/release/claudemods/ApexArchInstallerAppImage?color=FFD700&label=Latest%20Release&style=for-the-badge)](https://github.com/claudemods/ApexArchInstallerAppImage/releases/tag/v1.0)
 
 
