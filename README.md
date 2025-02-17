@@ -54,6 +54,10 @@ simple Qt6 AppImage Written In C++23
 <div align="center">
 this is for cloned arch systems only
 
+<div align="center">
+everything should be installed out the box on arch from my tests
+	<div align="center">
+you will not need kpmcore or python like calamares this is why i made it in the first place
 
 
 
