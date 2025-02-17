@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/ApexBrowser.png</file>
+        <file>images/software.png</file>
+        <file>images/distro.png</file>
+    </qresource>
+</RCC>
