@@ -3,7 +3,7 @@
 Comment[en_GB]=
 Comment=
 Comment[en_US]=
-Exec=ApexInstaller.bin
+Exec=Apexinstaller.bin
 GenericName[en_GB]=
 GenericName=ApexInstaller
 GenericName[en_US]=ApexInstaller
