@@ -76,8 +76,10 @@ this is for cloned arch systems only
 everything should be installed out the box on arch from my tests
 	<div align="center">
 you will not need kpmcore or python like calamares this is why i made it in the first place
-
-
+<div align="center">
+this will only install the preconfigured user and its cloned data ext4 is currently only supported
+	<div align="center">
+and this will setup with grub only this will not setup a seperate swap or home
 
 
 
