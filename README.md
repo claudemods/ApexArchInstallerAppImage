@@ -1,5 +1,57 @@
+<p align="center">
+    <img width="750" src="https://i.postimg.cc/pLGjchSh/Apex-Installer-App-Image-2-17-2025.png" alt="logo">
+</p>
+<p align="center">
+	 <img width="150" src="https://i.postimg.cc/c4VPgzBp/Apex-Browser.png" alt="logo">
+	<img width="150" src="https://i.postimg.cc/DfPPdZ7s/software.png" alt="logo">
+	</p>
+<div align="center">
+
+  <a href="https://www.linux.org" target="_blank"><img src="https://img.shields.io/badge/OS-Linux-e06c75?style=for-the-badge&logo=linux" /></a>
+	<a href="https://archlinux.org" target="_blank"><img src="https://img.shields.io/badge/DISTRO-Arch-56b6c2?style=for-the-badge&logo=arch-linux" /></a>
+ <a href="https://cachyos.org/" target="_blank"><img src="https://img.shields.io/badge/DISTRO-CachyOS-00FFFF?style=for-the-badge&logo=CachyOS" /></a>
+  </a>
+  <a href="https://chat.deepseek.com/" target="_blank">
+  <img src="https://img.shields.io/badge/Built_Using-DeepSeek-4D6BFE?style=for-the-badge&logo=deepseek&logoColor=4D6BFE" alt="Built Using DeepSeek">
+  <img src="https://i.postimg.cc/ydBbyvRt/Deepseek.jpg" alt="DeepSeek Logo" style="height: 30px; vertical-align: middle;">
+</a>
+
+<div align="center">
+
+[![Version](https://img.shields.io/github/v/release/claudemods/ApexArchIsoCreatorGuiAppImage?color=FFD700&label=Latest%20Release&style=for-the-badge)](
+
+
+</div>
+
+
+## [ Support Me ](https://www.paypal.com/paypalme/claudemods?country.x=GB&locale)
+
+
+</div>
+<div align="center">
+
+[![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&label=claudemods&color=3399FF&Linux&logo=ko-fi&logoColor=white)](https://ko-fi.com/claudemods)
+[![GitHub Sponsors](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&label=claudemods&color=A836FF&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/claudemods)</div>
+
+
+
+</div>
+
+<div align="center">
+
+</div>
+
+
+
+
+
+<div align="center">
 Apex Arch Installer AppImage v1.0
-simple Qt6 AppImage Written In C++ 23
+  
+<div align="center">
+simple Qt6 AppImage Written In C++23
+  
+<div align="center">
 this is for cloned arch systems only
 
 
@@ -15,4 +67,15 @@ this is for cloned arch systems only
 
 
 https://github.com/user-attachments/assets/6beb9127-70e6-4305-bac0-bbd1833b39b7
+
+
+
+
+<div align="center">
+
+<h2 align="center"> Connect With Me On Social </h2>
+
+<div align="center">
+
+[![YouTube](https://img.shields.io/youtube/channel/subscribers/UC6OgAhBq7Ocb5g1bQfVSd0Q?color=ff0000&label=Youtube&logo=youtube&style=palstic)](https://youtube.com/@claudemods)
 
