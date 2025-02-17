@@ -88,6 +88,9 @@ you will not need kpmcore or python like calamares this is why i made it in the 
 
 
 
+
+its pretty simple but for a tutorial on how to use you can watch my video below 
+
 https://github.com/user-attachments/assets/6beb9127-70e6-4305-bac0-bbd1833b39b7
 
 
