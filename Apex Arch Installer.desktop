@@ -3,7 +3,7 @@
 Comment[en_GB]=
 Comment=
 Comment[en_US]=
-Exec=ArchInstaller.bin
+Exec=Apex Arch Installer.bin
 GenericName[en_GB]=
 GenericName=Apex Arch Installer
 GenericName[en_US]=Apex Arch Installer
