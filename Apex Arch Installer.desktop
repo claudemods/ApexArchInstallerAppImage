@@ -1,0 +1,22 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Comment[en_GB]=
+Comment=
+Comment[en_US]=
+Exec=ArchInstaller.bin
+GenericName[en_GB]=
+GenericName=claudemods Arch Installer Script
+GenericName[en_US]=claudemods Arch Installer Script
+Icon=customdistro.png
+MimeType=
+Name[en_GB]=claudemods Arch Installer Script
+Name=claudemods Arch Installer Script
+Name[en_US]=claudemods Arch Installer Script
+Path=/usr/bin
+PrefersNonDefaultGPU=false
+StartupNotify=true
+Terminal=false
+Type=Application
+X-KDE-SubstituteUID=false
+X-KDE-Username=
+Categories=Utility;
