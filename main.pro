@@ -2,7 +2,7 @@
 TEMPLATE = app
 CONFIG += c++23
 # Target Application Name
-TARGET = Apexinstaller.bin
+TARGET = ApexInstaller
 # Source Files
 SOURCES += main.cpp
 # Qt Modules
