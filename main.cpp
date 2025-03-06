@@ -62,7 +62,7 @@ public:
         headerLayout->addLayout(imageLayout);
 
         // Add title text under the images
-        QLabel *titleLabel = new QLabel("Apex Installer v1.0", this);
+        QLabel *titleLabel = new QLabel("Apex Installer v1.0.1 04-03-2025", this);
         QFont titleFont = titleLabel->font();
         titleFont.setPointSize(16);
         titleLabel->setFont(titleFont);
