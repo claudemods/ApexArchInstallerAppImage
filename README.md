@@ -65,8 +65,11 @@
 
 <div align="center">
 Apex Arch Installer AppImage v1.0.1 06-03-2025
+	<div align="center">
 being tested but should work just the same
+		<div align="center">
 changelog v1.0.1
+			<div align="center">
 new option to give a location for iso and use the squashfs within
   
 <div align="center">
