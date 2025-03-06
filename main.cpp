@@ -61,7 +61,7 @@ public:
         headerLayout->addLayout(imageLayout);
 
         // Add title text under the images
-        QLabel *titleLabel = new QLabel("Apex Installer v1.0", this);
+        QLabel *titleLabel = new QLabel("Apex Installer v1.0.1 06-04-2025", this);
         QFont titleFont = titleLabel->font();
         titleFont.setPointSize(16);
         titleLabel->setFont(titleFont);
@@ -152,7 +152,8 @@ private slots:
         this->drive = drive;
 
         // Ask if the user wants to search default SquashFS locations
-        QString searchDefault = QInputDialog::getText(this, "SquashFS Search", "Do you want to search default SquashFS locations? (y/n):");
+        QString searchDefault = QInputDialog::getText(this, "SquashFS Search",
+                                                      "Do you want to search default SquashFS locations? or select your own or give a location of an iso (y/n):");
         QString airootfsPath;
         if (searchDefault.toLower() == "y") {
             // Search default locations
@@ -164,12 +165,28 @@ private slots:
             }
             outputText->append("Found SquashFS file at: " + airootfsPath);
         } else {
-            // Ask for custom SquashFS location
-            airootfsPath = QFileDialog::getOpenFileName(this, "Select SquashFS File", "/", "SquashFS Files (*.sfs)");
-            if (airootfsPath.isEmpty()) {
-                QMessageBox::warning(this, "Error", "SquashFS file is required.");
-                return; // Do not quit the application
-            }
+            QString customLocation = QFileDialog::getOpenFileName(this, "Select File", "/",
+                                                                  "Supported Files (*.squashfs *.sfs *.iso);;All Files (*)");
+            if (customLocation.endsWith(".iso", Qt::CaseInsensitive)) {
+                // Check the ISO for .squashfs or .sfs files
+                outputText->append("Checking ISO file for .squashfs/.sfs: " + customLocation);
+                QStringList squashFSFiles = checkISOForSquashFS(customLocation);
+                if (squashFSFiles.isEmpty()) {
+                    QMessageBox::warning(this, "Error", "No .squashfs/.sfs files found in the ISO.");
+                    return; // Do not quit the application
+                }
+                // Use the ISO as the source
+                airootfsPath = customLocation;
+                outputText->append("Using ISO file containing SquashFS: " + airootfsPath);
+            } else if (customLocation.endsWith(".sfs", Qt::CaseInsensitive) ||
+                customLocation.endsWith(".squashfs", Qt::CaseInsensitive)) {
+                // Use provided .squashfs/.sfs file
+                airootfsPath = customLocation;
+            outputText->append("Using provided SquashFS file: " + airootfsPath);
+                } else {
+                    QMessageBox::warning(this, "Error", "Invalid file type. Please provide a valid .squashfs/.sfs or .iso file.");
+                    return; // Do not quit the application
+                }
         }
 
         // Verify SquashFS file exists using QProcess
@@ -269,6 +286,36 @@ private slots:
             }
         }
         return "";
+    }
+
+    QStringList checkISOForSquashFS(const QString &isoPath) {
+        QStringList squashFSFiles;
+
+        // Use isoinfo to list the contents of the ISO
+        QProcess isoInfoProcess;
+        isoInfoProcess.start("isoinfo", QStringList() << "-i" << isoPath << "-l");
+        if (!isoInfoProcess.waitForFinished()) {
+            outputText->append("Failed to read ISO file using isoinfo.");
+            return squashFSFiles; // Return empty list
+        }
+
+        // Parse the output for .squashfs or .sfs files
+        QString isoContents = isoInfoProcess.readAllStandardOutput();
+        QStringList lines = isoContents.split('\n');
+        for (const QString &line : lines) {
+            if (line.contains(".squashfs", Qt::CaseInsensitive) || line.contains(".sfs", Qt::CaseInsensitive)) {
+                QString filePath = line.trimmed().split(' ').last(); // Extract file path
+                squashFSFiles.append(filePath);
+            }
+        }
+
+        if (squashFSFiles.isEmpty()) {
+            outputText->append("No .squashfs/.sfs files found in the ISO.");
+        } else {
+            outputText->append("Found .squashfs/.sfs files in the ISO: " + squashFSFiles.join(", "));
+        }
+
+        return squashFSFiles;
     }
 
     void displayPostInstallMenu() {
