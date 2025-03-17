@@ -64,9 +64,9 @@
 
 
 <div align="center">
-Apex Arch Installer AppImage v1.0.1 no release date yet
+v1.01 adds new colour background and button #00568f
 			<div align="center">
-new function to give a location for iso and use the squashfs within currently still being implemented due to errors
+
   
 <div align="center">
 simple Qt6 AppImage Written In C++23
