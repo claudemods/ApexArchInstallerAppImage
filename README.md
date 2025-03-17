@@ -91,7 +91,8 @@ or search apexinstaller in the aur or use this link https://aur.archlinux.org/pa
 
 
 
-![2025-02-17-062638_hyprshot](https://github.com/user-attachments/assets/b160d60b-9dc5-47f7-afa2-3830142475f6)
+![2025-03-17-112718_hyprshot](https://github.com/user-attachments/assets/c0cac535-a567-4bbf-8d16-5d94d03fdba9)
+
 
 
 
