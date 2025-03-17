@@ -16,6 +16,7 @@
 #include <QFont>
 #include <QFileDialog>
 #include <QFile>
+#include <QDir>
 
 class InstallerWindow : public QMainWindow {
     Q_OBJECT
@@ -27,11 +28,11 @@ public:
 
         // Set teal and black color scheme
         QPalette palette;
-        palette.setColor(QPalette::Window, QColor(0, 128, 128)); // Teal background
+        palette.setColor(QPalette::Window, QColor("#00568f"));
         palette.setColor(QPalette::WindowText, Qt::white);       // White text
         palette.setColor(QPalette::Base, QColor(53, 53, 53));    // Dark base for text widget
         palette.setColor(QPalette::Text, Qt::white);             // White text in text widget
-        palette.setColor(QPalette::Button, QColor(0, 128, 128)); // Teal buttons
+        palette.setColor(QPalette::Window, QColor("#00568f"));
         palette.setColor(QPalette::ButtonText, QColor(255, 215, 0)); // Gold button text
         setPalette(palette);
 
@@ -61,7 +62,7 @@ public:
         headerLayout->addLayout(imageLayout);
 
         // Add title text under the images
-        QLabel *titleLabel = new QLabel("Apex Arch Installer AppImage v1.0", this);
+        QLabel *titleLabel = new QLabel("Apex Installer v1.01", this);
         QFont titleFont = titleLabel->font();
         titleFont.setPointSize(16);
         titleLabel->setFont(titleFont);
@@ -111,13 +112,13 @@ public:
         // Log button and back button
         QHBoxLayout *buttonLayout = new QHBoxLayout();
         logButton = new QPushButton("Log", this);
-        logButton->setStyleSheet("background-color: teal; color: gold;");
+        logButton->setStyleSheet("background-color: #00568f; color: gold;");
         connect(logButton, &QPushButton::clicked, this, &InstallerWindow::showLog);
         buttonLayout->addStretch(); // Push log button to the right
         buttonLayout->addWidget(logButton);
 
         backButton = new QPushButton("Back", this);
-        backButton->setStyleSheet("background-color: teal; color: gold;");
+        backButton->setStyleSheet("background-color: #00568f; color: gold;");
         backButton->setVisible(false);
         connect(backButton, &QPushButton::clicked, this, &InstallerWindow::showDistroImage);
         buttonLayout->addWidget(backButton);
@@ -152,7 +153,8 @@ private slots:
         this->drive = drive;
 
         // Ask if the user wants to search default SquashFS locations
-        QString searchDefault = QInputDialog::getText(this, "SquashFS Search", "Do you want to search default SquashFS locations? (y/n):");
+        QString searchDefault = QInputDialog::getText(this, "SquashFS Search",
+                                                      "Do you want to search default SquashFS locations? or select your own or give a location of an iso (y/n):");
         QString airootfsPath;
         if (searchDefault.toLower() == "y") {
             // Search default locations
@@ -164,12 +166,27 @@ private slots:
             }
             outputText->append("Found SquashFS file at: " + airootfsPath);
         } else {
-            // Ask for custom SquashFS location
-            airootfsPath = QFileDialog::getOpenFileName(this, "Select SquashFS File", "/", "SquashFS Files (*.sfs)");
-            if (airootfsPath.isEmpty()) {
-                QMessageBox::warning(this, "Error", "SquashFS file is required.");
-                return; // Do not quit the application
-            }
+            QString customLocation = QFileDialog::getOpenFileName(this, "Select File", "/",
+                                                                  "Supported Files (*.squashfs *.sfs *.iso);;All Files (*)");
+            if (customLocation.endsWith(".iso", Qt::CaseInsensitive)) {
+                // Check the ISO for .squashfs or .sfs files
+                outputText->append("Checking ISO file for .squashfs/.sfs: " + customLocation);
+                QString squashFSPath = checkISOForSquashFS(customLocation);
+                if (squashFSPath.isEmpty()) {
+                    QMessageBox::warning(this, "Error", "No .squashfs/.sfs files found in the ISO.");
+                    return; // Do not quit the application
+                }
+                airootfsPath = squashFSPath;
+                outputText->append("Using SquashFS file from ISO: " + airootfsPath);
+            } else if (customLocation.endsWith(".sfs", Qt::CaseInsensitive) ||
+                customLocation.endsWith(".squashfs", Qt::CaseInsensitive)) {
+                // Use provided .squashfs/.sfs file
+                airootfsPath = customLocation;
+            outputText->append("Using provided SquashFS file: " + airootfsPath);
+                } else {
+                    QMessageBox::warning(this, "Error", "Invalid file type. Please provide a valid .squashfs/.sfs or .iso file.");
+                    return; // Do not quit the application
+                }
         }
 
         // Verify SquashFS file exists using QProcess
@@ -186,6 +203,59 @@ private slots:
         currentStep = 0;
         this->airootfsPath = airootfsPath;
         executeNextCommand();
+    }
+
+    QString checkISOForSquashFS(const QString &isoPath) {
+        // Create the /mnt/iso directory if it doesn't exist
+        QProcess mkdirProcess;
+        mkdirProcess.start("sudo", QStringList() << "-S" << "mkdir" << "-p" << "/mnt/iso");
+        mkdirProcess.write((sudoPassword + "\n").toUtf8());
+        mkdirProcess.closeWriteChannel();
+        if (!mkdirProcess.waitForFinished() || mkdirProcess.exitCode() != 0) {
+            outputText->append("Failed to create /mnt/iso directory.");
+            return "";
+        }
+
+        // Mount the ISO to /mnt/iso
+        QProcess mountProcess;
+        mountProcess.start("sudo", QStringList() << "-S" << "mount" << "-o" << "loop" << isoPath << "/mnt/iso");
+        mountProcess.write((sudoPassword + "\n").toUtf8());
+        mountProcess.closeWriteChannel();
+        if (!mountProcess.waitForFinished() || mountProcess.exitCode() != 0) {
+            outputText->append("Failed to mount ISO file to /mnt/iso.");
+            return "";
+        }
+
+        // Search for .squashfs or .sfs files in /mnt/iso/live and /mnt/iso/arch/x86_64
+        QStringList searchPaths = {"/mnt/iso/live", "/mnt/iso/arch/x86_64"};
+        QStringList filters;
+        filters << "*.squashfs" << "*.sfs";
+        QStringList squashFSFiles;
+
+        for (const QString &searchPath : searchPaths) {
+            QDir searchDir(searchPath);
+            if (searchDir.exists()) {
+                squashFSFiles.append(searchDir.entryList(filters, QDir::Files));
+            }
+        }
+
+        if (squashFSFiles.isEmpty()) {
+            outputText->append("No .squashfs/.sfs files found in the ISO.");
+        } else {
+            outputText->append("Found .squashfs/.sfs files in the ISO: " + squashFSFiles.join(", "));
+        }
+
+        // Unmount the ISO
+        QProcess umountProcess;
+        umountProcess.start("sudo", QStringList() << "-S" << "umount" << "/mnt/iso");
+        umountProcess.write((sudoPassword + "\n").toUtf8());
+        umountProcess.closeWriteChannel();
+        if (!umountProcess.waitForFinished() || umountProcess.exitCode() != 0) {
+            outputText->append("Failed to unmount ISO file from /mnt/iso.");
+        }
+
+        // Return the first found .squashfs/.sfs file
+        return squashFSFiles.isEmpty() ? "" : "/mnt/iso/" + squashFSFiles.first();
     }
 
     void executeNextCommand() {
@@ -354,7 +424,7 @@ private:
         {"sudo", {"genfstab", "-U", "-p", "/mnt", ">>", "/mnt/etc/fstab"}},
         {"sudo", {"arch-chroot", "/mnt", "/bin/bash", "-c", "grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=GRUB --recheck && grub-mkconfig -o /boot/grub/grub.cfg && mkinitcpio -P"}},
         {"sudo", {"umount", "-l", "/mnt/boot/efi"}}, // Lazy unmount
-        {"sudo", {"umount", "-l", "/mnt"}}           // Lazy unmount
+        {"sudo", {"umount", "-l", "/mnt"}}        // Lazy unmount
     };
 };
 
