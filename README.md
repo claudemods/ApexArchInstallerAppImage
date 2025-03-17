@@ -2,7 +2,7 @@
     <img width="750" src="https://i.postimg.cc/pLGjchSh/Apex-Installer-App-Image-2-17-2025.png" alt="logo">
 </p>
 <p align="center">
-	 <img width="150" src="https://i.postimg.cc/c4VPgzBp/Apex-Browser.png" alt="logo">
+	 <img width="150" src="https://i.postimg.cc/8CgB2xLb/Apex-Browser-2-5-2025.png" alt="logo">
 	<img width="150" src="https://i.postimg.cc/DfPPdZ7s/software.png" alt="logo">
 	</p>
 <div align="center">
